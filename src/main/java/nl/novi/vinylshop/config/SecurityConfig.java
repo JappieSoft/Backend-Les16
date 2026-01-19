@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.GrantedAuthority;
@@ -42,7 +43,14 @@ public class SecurityConfig {
                                 .decoder(jwtDecoder())
                         ))
                 .authorizeHttpRequests(authorize -> authorize
-                        .anyRequest().permitAll()
+                        .requestMatchers(HttpMethod.GET, "/albums").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/albums/**").hasAnyRole("USER, ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/artists/**").hasAnyRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/genres/**").hasAnyRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/publishers/**").hasAnyRole("USER")
+                        .requestMatchers("/albums/**/stock").hasAnyRole("ADMIN")
+                        .anyRequest().denyAll()
+
                 )
                 .sessionManagement(session-> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .build();
