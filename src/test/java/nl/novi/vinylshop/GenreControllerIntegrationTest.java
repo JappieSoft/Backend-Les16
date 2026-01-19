@@ -24,8 +24,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @ActiveProfiles("test")
-@AutoConfigureMockMvc
-@SpringBootTest()
+@AutoConfigureMockMvc(addFilters = false)
+@SpringBootTest
 public class GenreControllerIntegrationTest {
 
     @Autowired
