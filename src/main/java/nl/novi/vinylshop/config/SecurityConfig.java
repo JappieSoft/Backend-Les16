@@ -43,14 +43,14 @@ public class SecurityConfig {
                                 .decoder(jwtDecoder())
                         ))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.GET, "/albums").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/albums/**").hasAnyRole("USER, ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/artists/**").hasAnyRole("USER")
-                        .requestMatchers(HttpMethod.GET, "/genres/**").hasAnyRole("USER")
-                        .requestMatchers(HttpMethod.GET, "/publishers/**").hasAnyRole("USER")
-                        .requestMatchers("/albums/**/stock").hasAnyRole("ADMIN")
+                        .requestMatchers("/albums/{id}/stocks/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/albums", "albums/{id}/**", "/artists", "/genres", "/publishers").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/albums/{id}", "/artists/{id}", "/genres/{id}", "/publishers/{id}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/albums/{id}/**", "/artists/{id}", "/genres/{id}", "/publishers/{id}").hasRole("ADMIN")
+                        .requestMatchers("/artists/**", "/genres/**", "/publishers/**", "/profiles/**").authenticated()
+                        .requestMatchers("/albums/**").permitAll()
+                        .requestMatchers("/profiles").permitAll()
                         .anyRequest().denyAll()
-
                 )
                 .sessionManagement(session-> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .build();

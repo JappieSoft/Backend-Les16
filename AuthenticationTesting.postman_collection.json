@@ -1,0 +1,349 @@
+{
+  "info": {
+    "_postman_id": "d063b9dc-ed26-400e-b681-045862e73f97",
+    "name": "Authentication Testing",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "42630720"
+  },
+  "item": [
+    {
+      "name": "New Request",
+      "request": {
+        "auth": {
+          "type": "oauth2",
+          "oauth2": [
+            {
+              "key": "scope",
+              "value": "openid email",
+              "type": "string"
+            },
+            {
+              "key": "clientSecret",
+              "value": "{{client-secret}}",
+              "type": "string"
+            },
+            {
+              "key": "clientId",
+              "value": "{{client-id}}",
+              "type": "string"
+            },
+            {
+              "key": "accessTokenUrl",
+              "value": "{{token-url}}",
+              "type": "string"
+            },
+            {
+              "key": "authUrl",
+              "value": "{{auth-url}}",
+              "type": "string"
+            },
+            {
+              "key": "useBrowser",
+              "value": true,
+              "type": "boolean"
+            },
+            {
+              "key": "tokenName",
+              "value": "EdHub_Machine_1st_Test_Token",
+              "type": "string"
+            },
+            {
+              "key": "addTokenTo",
+              "value": "header",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/albums",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "albums"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get all Albums",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/albums",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "albums"
+          ]
+        },
+        "description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+      },
+      "response": []
+    },
+    {
+      "name": "Post Genre - to test auth",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Successful POST request\", function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+              "});",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "oauth2",
+          "oauth2": [
+            {
+              "key": "scope",
+              "value": "openid email",
+              "type": "string"
+            },
+            {
+              "key": "clientSecret",
+              "value": "{{client-secret}}",
+              "type": "string"
+            },
+            {
+              "key": "clientId",
+              "value": "{{client-id}}",
+              "type": "string"
+            },
+            {
+              "key": "accessTokenUrl",
+              "value": "{{token-url}}",
+              "type": "string"
+            },
+            {
+              "key": "authUrl",
+              "value": "{{auth-url}}",
+              "type": "string"
+            },
+            {
+              "key": "useBrowser",
+              "value": true,
+              "type": "boolean"
+            },
+            {
+              "key": "tokenName",
+              "value": "EdHub_Machine_1st_Test_Token",
+              "type": "string"
+            },
+            {
+              "key": "addTokenTo",
+              "value": "header",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"name\": \"TestData\",\n    \"description\" : \"TestData Description of something\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/genres",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "genres"
+          ]
+        },
+        "description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+      },
+      "response": []
+    },
+    {
+      "name": "Get by Stock by Album id Copy",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/albums/1/stock",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "albums",
+            "1",
+            "stock"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Post Stock",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Successful POST request\", function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+              "});",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "oauth2",
+          "oauth2": [
+            {
+              "key": "scope",
+              "value": "openid email",
+              "type": "string"
+            },
+            {
+              "key": "clientSecret",
+              "value": "{{client-secret}}",
+              "type": "string"
+            },
+            {
+              "key": "clientId",
+              "value": "{{client-id}}",
+              "type": "string"
+            },
+            {
+              "key": "accessTokenUrl",
+              "value": "{{token-url}}",
+              "type": "string"
+            },
+            {
+              "key": "authUrl",
+              "value": "{{auth-url}}",
+              "type": "string"
+            },
+            {
+              "key": "useBrowser",
+              "value": true,
+              "type": "boolean"
+            },
+            {
+              "key": "tokenName",
+              "value": "EdHub_Machine_1st_Test_Token",
+              "type": "string"
+            },
+            {
+              "key": "addTokenTo",
+              "value": "header",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"condition\": \"Cheap Shit\",\n    \"price\": \"0.05\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/albums/1/stock",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "albums",
+            "1",
+            "stock"
+          ]
+        },
+        "description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+      },
+      "response": []
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "addTokenTo",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "value": ""
+    }
+  ]
+}
